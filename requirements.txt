@@ -90,6 +90,7 @@ pydantic_core==2.46.4
 Pygments==2.20.0
 pyparsing==3.3.2
 pyspark==4.1.2
+pytest>=8.0.0
 python-dateutil==2.9.0.post0
 python-dotenv==1.2.2
 pytz==2026.2
