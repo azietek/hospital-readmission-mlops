@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # End-to-End Hospital Readmission Prediction MLOps Pipeline
 
 An enterprise-grade Machine Learning Engineering project demonstrating the operationalization of a clinical prediction pipeline. This project transitions a standard data science problem—predicting diabetic patient readmission using the **Diabetes 130-US Hospitals Dataset**—into a production-ready, containerized microservice equipped with automated hyperparameter tuning, experiment tracking, and CI/CD.
@@ -114,8 +113,3 @@ The project utilizes `pytest` to guarantee endpoint schema integrity. Run the te
 pytest
 ```
 
-Every `push` or `pull_request` to the main branch automatically triggers the `.github/workflows/ci-cd.yml` workflow pipeline on GitHub runners, validating environment setup, dependency resolution, and test execution.
-=======
-# hospital-readmission-mlops
-End-to-end MLOps pipeline for hospital readmission prediction using PySpark, XGBoost, MLflow, FastAPI, and Docker. Features automated CI/CD and production-ready serving.
->>>>>>> b6bcfaaf1c93ce420caebd8d3f537f07a0bb1fe2
