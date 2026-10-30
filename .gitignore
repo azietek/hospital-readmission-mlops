@@ -1,5 +1,12 @@
-hospital_mlops/
+# System / OS files
+.DS_Store
+
+# MLflow & Local Artifacts
 mlflow.db
 mlartifacts/
-__pycache__/
+mlruns/
+
+# Env
+hospital_mlops/
+_pycache__/
 .env
