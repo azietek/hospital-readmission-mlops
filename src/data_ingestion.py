@@ -88,7 +88,7 @@ def main():
         return
 
     # Data loading: reading the CSV file into a Spark DataFrame
-    raw_df = spark.read.csv(data_path, header=True, inferSchema=True, nullValue="?")
+    raw_df = spark.read.csv(data_path, header=True, yinferSchema=True, nullValue="?")
     print(f"Data loaded. Number of rows: {raw_df.count()}")
     
     # Cleaning and feature engineering: applying the defined functions to prepare the data for ML

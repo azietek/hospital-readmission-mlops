@@ -1,3 +1,5 @@
 hospital_mlops/
-data/
-notes.ipynb
+mlflow.db
+mlartifacts/
+__pycache__/
+.env

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # End-to-End Hospital Readmission Prediction MLOps Pipeline
 
 An enterprise-grade Machine Learning Engineering project demonstrating the operationalization of a clinical prediction pipeline. This project transitions a standard data science problem—predicting diabetic patient readmission using the **Diabetes 130-US Hospitals Dataset**—into a production-ready, containerized microservice equipped with automated hyperparameter tuning, experiment tracking, and CI/CD.
@@ -29,8 +30,7 @@ hospital-readmission-mlops/
 │   ├── data_ingestion.py      # PySpark ETL and Feature Engineering pipeline
 │   ├── train.py               # Optuna tuning & MLflow experiment/artifact logging
 │   ├── predict_api.py         # Production FastAPI model serving script
-│   └── best_model/            # Downloaded production model deployment artifact
-├── tests/
+│   ├── best_model/            # Downloaded production model deployment artifact
 │   └── test_pipeline.py       # Unit tests for API structure and data logic
 ├── Dockerfile                 # Production multi-stage container build definition
 ├── requirements.txt           # Explicitly pinned project dependencies
@@ -41,7 +41,7 @@ hospital-readmission-mlops/
 
 ### 1. Environment Setup (macOS / Linux)
 
-Ensure you have Python 3.10+ installed. Clone this repository and initialize an isolated virtual environment:
+Ensure you have Python 3.12+ installed. Clone this repository and initialize an isolated virtual environment:
 
 ```
 # Create and activate virtual environment
@@ -115,3 +115,7 @@ pytest
 ```
 
 Every `push` or `pull_request` to the main branch automatically triggers the `.github/workflows/ci-cd.yml` workflow pipeline on GitHub runners, validating environment setup, dependency resolution, and test execution.
+=======
+# hospital-readmission-mlops
+End-to-end MLOps pipeline for hospital readmission prediction using PySpark, XGBoost, MLflow, FastAPI, and Docker. Features automated CI/CD and production-ready serving.
+>>>>>>> b6bcfaaf1c93ce420caebd8d3f537f07a0bb1fe2
