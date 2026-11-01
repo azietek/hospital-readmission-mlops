@@ -167,7 +167,7 @@ def run_hyperparameter_tuning():
             y_prob=pred_proba,
             model=best_model,
             X_test=X_test,
-            output_path="MODEL_REPORT.md"
+            output_path="reports/MODEL_REPORT.md"
         )
 
 if __name__ == "__main__":

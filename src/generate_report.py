@@ -12,11 +12,13 @@ def generate_shap_values(model, X_test):
 
 def save_shap_plots(shap_values, X_sample, output_dir="reports"):
     """
-    Generates and saves SHAP summary plots for model interpretability:
+    Generates and saves SHAP summary plots for model interpretability inside the reports directory:
     1. Summary Plot (beeswarm)
     2. Bar Plot (feature importance)
     """
+    
     os.makedirs(output_dir, exist_ok=True)
+
     max_features = 10
 
     # --- 1. SUMMARY PLOT (Beeswarm) ---
@@ -24,7 +26,7 @@ def save_shap_plots(shap_values, X_sample, output_dir="reports"):
     shap.summary_plot(shap_values, X_sample, max_display=max_features, show=False)
     plt.title("SHAP Summary Plot", fontsize=12, pad=15)
     plt.tight_layout()
-    summary_path = os.path.join(output_dir, "shap_summary.png")
+    summary_path = os.path.join(output_dir, "shap_summary.png") 
     plt.savefig(summary_path, dpi=300, bbox_inches='tight')
     plt.close()
     print(f"Saved: {summary_path}")
@@ -34,14 +36,16 @@ def save_shap_plots(shap_values, X_sample, output_dir="reports"):
     shap.summary_plot(shap_values, X_sample, plot_type="bar", max_display=max_features, show=False)
     plt.title("SHAP Feature Importance", fontsize=12, pad=15)
     plt.tight_layout()
-    bar_path = os.path.join(output_dir, "shap_bar.png")
+    bar_path = os.path.join(output_dir, "shap_bar.png") 
     plt.savefig(bar_path, dpi=300, bbox_inches='tight')
     plt.close()
     print(f"Saved: {bar_path}")
 
-def save_model_report(y_true, y_pred, y_prob, model, X_test, output_path="MODEL_REPORT.md"):
+def save_model_report(y_true, y_pred, y_prob, model, X_test, output_path=""):
     """Generates global performance metrics, classification reports, confusion matrix, and SHAP plots."""
     
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+
     report_dict = classification_report(y_true, y_pred, output_dict=True)
     tn, fp, fn, tp = confusion_matrix(y_true, y_pred).ravel()
     auc_score = roc_auc_score(y_true, y_prob)
@@ -84,8 +88,8 @@ def save_model_report(y_true, y_pred, y_prob, model, X_test, output_path="MODEL_
         f.write("## 4. Model Interpretability (SHAP Analysis)\n")
         f.write("Plots below show the global and directional impact of features on the model's decisions:\n\n")
         f.write("### Summary Plot (Directional Impact)\n")
-        f.write("![SHAP Summary Plot](reports/shap_summary.png)\n\n")
+        f.write("![SHAP Summary Plot](shap_summary.png)\n\n")
         f.write("### Feature Importance (Global Importance)\n")
-        f.write("![SHAP Bar Plot](reports/shap_bar.png)\n")
+        f.write("![SHAP Bar Plot](shap_bar.png)\n")
 
     print(f"✅ Report saved successfully to `{output_path}`")
