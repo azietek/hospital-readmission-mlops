@@ -1,39 +1,45 @@
-# End-to-End Hospital Readmission Prediction MLOps Pipeline
+# 🏥 Hospital Readmission MLOps Pipeline
 
-An enterprise-grade Machine Learning Engineering project demonstrating the operationalization of a clinical prediction pipeline. This project transitions a standard data science problem—predicting diabetic patient readmission using the **Diabetes 130-US Hospitals Dataset**—into a production-ready, containerized microservice equipped with automated hyperparameter tuning, experiment tracking, and CI/CD.
+Production-ready MLOps pipeline for predicting 30-day hospital readmissions using the **Diabetes 130-US Hospitals (1999–2008)** dataset. The project focuses on robust PySpark ETL, domain-specific feature engineering, clinical interpretability via SHAP, and rigorous tracking.
 
-## 🎯 Project Objective
-To bridge the gap between notebook-based experimentation and robust, maintainable production engineering by implementing clean code standards, automated pipelines, and continuous integration.
+---
 
-## 🏗️ Architecture & Tech Stack
+## 🚀 Key Results & Performance
+Our latest XGBoost model successfully balances clinical recall and precision, achieving strong generalization on high-cardiac/diabetic risk profiles:
 
+* **ROC-AUC:** `0.6661`
+* **Recall (Class 1 - Readmitted <30 Days):** `57.16%` (prioritizing high-risk patient capture)
+* **Accuracy:** `66.25%`
 
+---
 
-- **Data Engineering (ETL):** **PySpark & Spark SQL** used for distributed data ingestion, cleaning, and scalable feature transformations (`StringIndexer`, `OneHotEncoder`, `VectorAssembler`).
-- **Experimentation & Hyperparameter Tuning:** **Optuna** paired with **MLflow** for automated tracking of trials, metrics (ROC AUC, Accuracy), and automated artifacts/model logging.
-- **Model Registry & Versioning:** **MLflow Model Registry** for centralizing model versions.
-- **ML Modeling:** **XGBoost Classifier** optimized for clinical classification metrics.
-- **Deployment & Serving:** **FastAPI & Uvicorn** delivering a high-performance async ML inference microservice with request validation via **Pydantic**.
-- **Containerization:** **Docker** ensuring reproducible runtime environments across staging and production.
-- **CI/CD & Code Quality:** **GitHub Actions** and **PyTest** for automated execution of unit tests upon code change.
+## 🛠️ Tech Stack & Architecture
+- **Data Processing & ETL:** PySpark (handling 100k+ hospital records)
+- **Machine Learning:** XGBoost Classifier
+- **Experiment Tracking & Registry:** MLflow
+- **Model Interpretability:** SHAP (`summary_plot` & `bar_plot`)
+- **Pipeline Orchestration:** Python modular architecture (`src/data_ingestion.py`, `src/train.py`, etc.)
 
-## 📁 Repository Structure
+---
+
+## 🧬 Domain-Specific Feature Engineering & ETL Decisions
+Unlike standard black-box ML pipelines, this project embeds strict clinical logic:
+1. **Mortality & Hospice Filtering:** Removed records with discharge disposition codes corresponding to death (`11`) and hospice care (`13, 14, 19, 20`) to prevent data leakage and target misalignment.
+2. **Discharge Disposition Grouping:** Consolidated dozens of fragmented hospital discharge codes into meaningful clinical categories (`Home`, `Transfer_Rehab`, `Home_Health`) to improve feature stability and SHAP legibility.
+3. **Continuous Age Transformation:** Converted binned age ranges into continuous midpoint values (`age_numeric`) for smoother tree splits.
+4. **Utilization Aggregates:** Engineered high-level activity metrics (e.g., total prior visits, intensity rates) to reduce redundancy in raw lab/procedure counts.
+
+---
+
+## 📂 Repository Structure
 ```text
 hospital-readmission-mlops/
-├── .github/
-│   └── workflows/
-│       └── ci-cd.yml          # GitHub Actions CI Automation
-├── data/                      # Source & intermediate datasets (.parquet format)
-├── src/
-│   ├── __init__.py
-│   ├── data_ingestion.py      # PySpark ETL and Feature Engineering pipeline
-│   ├── train.py               # Optuna tuning & MLflow experiment/artifact logging
-│   ├── predict_api.py         # Production FastAPI model serving script
-│   ├── best_model/            # Downloaded production model deployment artifact
-│   └── test_pipeline.py       # Unit tests for API structure and data logic
-├── Dockerfile                 # Production multi-stage container build definition
-├── requirements.txt           # Explicitly pinned project dependencies
-└── README.md                  # Comprehensive technical documentation
+├── data/                  # Raw and processed datasets
+├── reports/               # Generated SHAP plots (summary & bar) & evaluation reports
+├── src/                   # Core pipeline scripts (ETL, training, evaluation)
+├── mlruns/                # MLflow tracking directory
+├── MODEL_REPORT.md        # Detailed latest evaluation markdown report
+└── README.md              # Project documentation
 ```
 
 ## 🚀 Getting Started
@@ -112,4 +118,8 @@ The project utilizes `pytest` to guarantee endpoint schema integrity. Run the te
 ```
 pytest
 ```
+
+---
+## 📄 Full Project Documentation
+For a deep dive into the methodology, feature engineering decisions, and clinical interpretation of SHAP values, check out the [Full Project Report](PROJECT_REPORT.md).
 

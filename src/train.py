@@ -4,7 +4,7 @@ import mlflow.xgboost
 from mlflow.models import infer_signature  
 import optuna
 from pyspark.sql import SparkSession
-from xgboost import XGBClassifier
+from xgboost import XGBClassifier, spark
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, average_precision_score, f1_score, roc_auc_score
 import numpy as np
@@ -12,8 +12,17 @@ import pandas as pd
 
 from generate_report import save_model_report  # Importing the function to save model evaluation report
 
+# Removing warnings and setting logging levels to reduce clutter in the output
+import warnings
+warnings.filterwarnings('ignore') 
+import logging
+logging.getLogger("mlflow").setLevel(logging.ERROR)
+
 def load_processed_data_with_feature_names():
     spark = SparkSession.builder.appName("DiabetesTraining").master("local[*]").getOrCreate()
+    sc = spark.sparkContext
+    sc.setLogLevel("ERROR")  
+    
     df = spark.read.parquet("data/processed.parquet")
 
     # Extracting feature names from Spark DataFrame metadata to ensure correct order for XGBoost input
@@ -105,6 +114,9 @@ def find_optimal_threshold(y_true, y_prob):
     return best_threshold
 
 def run_hyperparameter_tuning():
+
+    optuna.logging.set_verbosity(optuna.logging.WARNING)
+
     mlflow.set_tracking_uri("http://127.0.0.1:5000")
     mlflow.set_experiment("Diabetes_Readmission_With_Optuna")
     
@@ -153,6 +165,8 @@ def run_hyperparameter_tuning():
             y_true=y_test,
             y_pred=predictions,
             y_prob=pred_proba,
+            model=best_model,
+            X_test=X_test,
             output_path="MODEL_REPORT.md"
         )
 
