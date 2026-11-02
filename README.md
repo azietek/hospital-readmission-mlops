@@ -38,7 +38,7 @@ hospital-readmission-mlops/
 ├── reports/               # Generated SHAP plots (summary & bar) & evaluation reports
 ├── src/                   # Core pipeline scripts (ETL, training, evaluation)
 ├── mlruns/                # MLflow tracking directory
-├── MODEL_REPORT.md        # Detailed latest evaluation markdown report
+├── PROJECT_REPORT.md        # Project Summary
 └── README.md              # Project documentation
 ```
 

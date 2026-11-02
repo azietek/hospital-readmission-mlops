@@ -10,3 +10,6 @@ mlruns/
 hospital_mlops/
 _pycache__/
 .env
+
+# Other
+notes.ipynb
